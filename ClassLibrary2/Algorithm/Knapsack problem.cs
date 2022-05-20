@@ -113,8 +113,6 @@ namespace MyLib.Algorithm
         }
         #endregion
 
-
-
         #region void - calculateFinalProductList Рассчитать окончательный список продуктов в рюкзаке
         /// <summary>
         /// Рассчитать окончательный список продуктов в рюкзаке
@@ -155,7 +153,6 @@ namespace MyLib.Algorithm
             }
         }
         #endregion
-
 
         private void SwapProduct(ref List<Product> productList, int i, int j)
         {
