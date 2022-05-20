@@ -66,7 +66,6 @@ namespace MyLib.Algorithm
 
             CalculateFinalProductList(resultProductDic);
 
-            Console.WriteLine();
         }
 
 
