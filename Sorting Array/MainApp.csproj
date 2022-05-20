@@ -7,7 +7,7 @@
     <ProjectGuid>{27504BF0-8F4E-4C2C-B5E6-211492462B03}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Sorting_Array</RootNamespace>
-    <AssemblyName>Sorting Array</AssemblyName>
+    <AssemblyName>MainApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
