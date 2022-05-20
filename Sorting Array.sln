@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp", "Sorting Array\MainApp.csproj", "{27504BF0-8F4E-4C2C-B5E6-211492462B03}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary2", "ClassLibrary2\ClassLibrary2.csproj", "{6BA3F3F5-EA80-4DC1-B4E2-B409A21D6251}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmsLibrary", "ClassLibrary2\AlgorithmsLibrary.csproj", "{6BA3F3F5-EA80-4DC1-B4E2-B409A21D6251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
