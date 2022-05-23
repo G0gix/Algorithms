@@ -41,6 +41,7 @@ namespace MyLib.Algorithm
         /// </summary>
         public void DynamicAnswer()
         {
+            // To Fix - При одинаковых именах продуках возникает исключение
             Dictionary<string, List<Product>> resultProductDic = new Dictionary<string, List<Product>>();
 
 
@@ -62,14 +63,35 @@ namespace MyLib.Algorithm
                     //оставшееся место в рюкзаке
                     int remainingPlace = backpackWeight - product.Weight;
 
-                    //Поиск продуктов по остатку места в рюкзаке
-                    List<Product> sameWidthProductsList = FindProductBySameWidth(remainingPlace);
-                    Product mostExpensiveProduct = GetExpensiveProduct(sameWidthProductsList);
+                    if (remainingPlace == 1)
+                    {
+                        //Поиск продуктов по остатку места в рюкзаке
+                        List<Product> sameWidthProductsList = FindProductBySameWidth(remainingPlace);
+                        Product mostExpensiveProduct = GetExpensiveProduct(sameWidthProductsList);
 
-                    tempList.Add(product);
-                    tempList.Add(mostExpensiveProduct);
+                        tempList.Add(product);
+                        tempList.Add(mostExpensiveProduct);
 
-                    resultProductDic.Add(product.Name, tempList);
+                        resultProductDic.Add(product.Name, tempList);
+                    }
+                    else
+                    {
+                        int localRemainingPlace = remainingPlace;
+
+                        while (localRemainingPlace <= 0)
+                        {
+                            //Поиск продуктов по остатку места в рюкзаке
+                            List<Product> sameWidthProductsList = FindProductBySameWidth(localRemainingPlace);
+                            Product mostExpensiveProduct = GetExpensiveProduct(sameWidthProductsList);
+
+                            
+                            
+                            
+                            tempList.Add(product);
+                            tempList.Add(mostExpensiveProduct);
+                            resultProductDic.Add(product.Name, tempList);
+                        }
+                    }
                 }
             }
 
@@ -131,6 +153,7 @@ namespace MyLib.Algorithm
             List<Product> finalSetOfProducts = new List<Product>();
             decimal totalPrice = 0;
 
+             
             foreach (var resultItem in resultProductDic)
             {
                 decimal totalPriceOfProducts = 0;
@@ -144,6 +167,8 @@ namespace MyLib.Algorithm
                     totalPrice = totalPriceOfProducts;
 
                     finalSetOfProducts.Clear();
+
+                    //To do - Убрать добовление в List при проверке суммы. 
                     foreach (Product product in resultItem.Value)
                     {
                         finalSetOfProducts.Add(product);
