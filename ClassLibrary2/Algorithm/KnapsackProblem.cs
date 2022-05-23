@@ -162,7 +162,6 @@ namespace MyLib.Algorithm
         }
         #endregion
 
-       
         private void SwapProduct(ref List<Product> productList, int i, int j)
         {
             Product temp = productList[i];
