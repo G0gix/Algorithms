@@ -42,9 +42,12 @@ namespace Sorting_Array
                 new Product{Name = "Магнитофон", Price = 3000, Weight = 4},
                 new Product{Name = "Ноутбук", Price = 2000, Weight = 3},
                 new Product{Name = "MP3", Price = 1000, Weight = 1},
+                
+                
+                new Product{Name = "Монитор", Price = 2000, Weight = 4},
             };
 
-            KnapsackAlgorithm backpackWeightQuestion = new KnapsackAlgorithm(4, productList);
+            KnapsackAlgorithm backpackWeightQuestion = new KnapsackAlgorithm(8, productList);
             backpackWeightQuestion.GetReadyBackpackGreedy();
             
             backpackWeightQuestion.DynamicAnswer();

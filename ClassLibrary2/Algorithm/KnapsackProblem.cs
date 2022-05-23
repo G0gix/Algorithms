@@ -78,19 +78,23 @@ namespace MyLib.Algorithm
                     {
                         int localRemainingPlace = remainingPlace;
 
-                        while (localRemainingPlace <= 0)
+                        
+                        while (localRemainingPlace > 0)
                         {
                             //Поиск продуктов по остатку места в рюкзаке
                             List<Product> sameWidthProductsList = FindProductBySameWidth(localRemainingPlace);
+
                             Product mostExpensiveProduct = GetExpensiveProduct(sameWidthProductsList);
+                               
+
 
                             
-                            
-                            
-                            tempList.Add(product);
+
                             tempList.Add(mostExpensiveProduct);
-                            resultProductDic.Add(product.Name, tempList);
+                            
+                            localRemainingPlace--;
                         }
+                        resultProductDic.Add(product.Name, tempList);
                     }
                 }
             }
@@ -118,6 +122,7 @@ namespace MyLib.Algorithm
                 }
             }
 
+            
             return productsWithTheSameWeightList;
         }
         #endregion
@@ -129,17 +134,27 @@ namespace MyLib.Algorithm
         /// <returns></returns>
         public Product GetExpensiveProduct(List<Product> productList)
         {
-            Product ProductWithMaxPrice = new Product();
-
-            for (int i = 0; i < productList.Count; i++)
+            if (productList.Count == 1)
             {
-                if (ProductWithMaxPrice.Price < productList[i].Price)
-                {
-                    ProductWithMaxPrice = productList[i];
-                }
+                return productList[0];
             }
+            else if (productList.Count == 0) 
+            {
+                return new Product() { Name = "Нет продукта", Price = 0, Weight = 0 };
+            }
+            else
+            {
+                Product ProductWithMaxPrice = new Product();
+                for (int i = 0; i < productList.Count; i++)
+                {
+                    if (ProductWithMaxPrice.Price < productList[i].Price)
+                    {
+                        ProductWithMaxPrice = productList[i];
+                    }
+                }
 
-            return ProductWithMaxPrice;
+                return ProductWithMaxPrice;
+            }                
         }
         #endregion
 
