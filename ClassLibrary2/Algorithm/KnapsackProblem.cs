@@ -15,6 +15,10 @@ namespace MyLib.Algorithm
             this.backpackWeight = backpackWeight;
         }
 
+        #region void GetReadyBackpackGreedy Метод жадного аглоритма
+        /// <summary>
+        /// Метод жадного аглоритма
+        /// </summary>
         public void GetReadyBackpackGreedy()
         {
             Product maxPrice = productList[0];
@@ -29,7 +33,12 @@ namespace MyLib.Algorithm
 
             Console.WriteLine("Жадный алгоритм выбрал продукт с максимальной ценой: " + maxPrice.Name);
         }
+        #endregion
 
+        #region void DynamicAnswer Поиск продуктов с помощью динамического программирования
+        /// <summary>
+        /// Dynamic programming
+        /// </summary>
         public void DynamicAnswer()
         {
             Dictionary<string, List<Product>> resultProductDic = new Dictionary<string, List<Product>>();
@@ -67,8 +76,7 @@ namespace MyLib.Algorithm
             CalculateFinalProductList(resultProductDic);
 
         }
-
-
+        #endregion
 
         #region List<Product> - FindProductBySameWidth Поиск продуктов по одинаковой массе
         /// <summary>
@@ -113,7 +121,7 @@ namespace MyLib.Algorithm
         }
         #endregion
 
-        #region void - calculateFinalProductList Рассчитать окончательный список продуктов в рюкзаке
+        #region void - CalculateFinalProductList Рассчитать окончательный список продуктов в рюкзаке
         /// <summary>
         /// Рассчитать окончательный список продуктов в рюкзаке
         /// </summary>
@@ -154,6 +162,7 @@ namespace MyLib.Algorithm
         }
         #endregion
 
+       
         private void SwapProduct(ref List<Product> productList, int i, int j)
         {
             Product temp = productList[i];
