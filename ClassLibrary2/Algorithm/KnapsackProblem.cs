@@ -69,27 +69,29 @@ namespace MyLib.Algorithm
                         List<Product> sameWidthProductsList = FindProductBySameWidth(remainingPlace);
                         Product mostExpensiveProduct = GetExpensiveProduct(sameWidthProductsList);
 
+                        if (mostExpensiveProduct == null) continue;
+                       
                         tempList.Add(product);
                         tempList.Add(mostExpensiveProduct);
-
                         resultProductDic.Add(product.Name, tempList);
                     }
                     else
                     {
                         int localRemainingPlace = remainingPlace;
 
-                        
                         while (localRemainingPlace > 0)
                         {
                             //Поиск продуктов по остатку места в рюкзаке
                             List<Product> sameWidthProductsList = FindProductBySameWidth(localRemainingPlace);
 
                             Product mostExpensiveProduct = GetExpensiveProduct(sameWidthProductsList);
-                               
 
-
+                            if (mostExpensiveProduct == null)
+                            {
+                                localRemainingPlace--;
+                                continue;
+                            };
                             
-
                             tempList.Add(mostExpensiveProduct);
                             
                             localRemainingPlace--;
@@ -140,7 +142,7 @@ namespace MyLib.Algorithm
             }
             else if (productList.Count == 0) 
             {
-                return new Product() { Name = "Нет продукта", Price = 0, Weight = 0 };
+                return null;
             }
             else
             {

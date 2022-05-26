@@ -45,6 +45,7 @@ namespace Sorting_Array
                 
                 
                 new Product{Name = "Монитор", Price = 2000, Weight = 4},
+                new Product{Name = "Телефон", Price = 5000, Weight = 3},
             };
 
             KnapsackAlgorithm backpackWeightQuestion = new KnapsackAlgorithm(8, productList);
