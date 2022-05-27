@@ -6,8 +6,8 @@ namespace MyLib.Algorithm
 {
     public class KnapsackAlgorithm
     {
-        private int backpackWeight;
-        List<Product> productList;
+        private readonly int backpackWeight;
+        private readonly List<Product> productList;
 
         public KnapsackAlgorithm(int backpackWeight, List<Product> productList)
         {
@@ -37,17 +37,18 @@ namespace MyLib.Algorithm
 
         #region void DynamicAnswer Поиск продуктов с помощью динамического программирования
         /// <summary>
-        /// Dynamic programming
+        /// Поиск продуктов с помощью динамического программирования
         /// </summary>
         public void DynamicAnswer()
         {
-            // To Fix - При одинаковых именах продуках возникает исключение
+            // TOFIX - При одинаковых именах продуках возникает исключение
             Dictionary<string, List<Product>> resultProductDic = new Dictionary<string, List<Product>>();
 
 
             foreach (Product product in productList)
             {
                 List<Product> tempList = new List<Product>();
+                
                 if (product.Weight == backpackWeight)
                 {
                     tempList.Add(product);
@@ -60,14 +61,11 @@ namespace MyLib.Algorithm
                 }
                 else if (product.Weight < backpackWeight)
                 {
-                    //оставшееся место в рюкзаке
                     int remainingPlace = backpackWeight - product.Weight;
 
                     if (remainingPlace == 1)
                     {
-                        //Поиск продуктов по остатку места в рюкзаке
-                        List<Product> sameWidthProductsList = FindProductBySameWidth(remainingPlace);
-                        Product mostExpensiveProduct = GetExpensiveProduct(sameWidthProductsList);
+                        Product mostExpensiveProduct = GetMostExpensiveProductByWeight(remainingPlace);
 
                         if (mostExpensiveProduct == null) continue;
                        
@@ -81,14 +79,12 @@ namespace MyLib.Algorithm
 
                         while (localRemainingPlace > 0)
                         {
-                            //Поиск продуктов по остатку места в рюкзаке
-                            List<Product> sameWidthProductsList = FindProductBySameWidth(localRemainingPlace);
 
-                            Product mostExpensiveProduct = GetExpensiveProduct(sameWidthProductsList);
+                            Product mostExpensiveProduct = GetMostExpensiveProductByWeight(localRemainingPlace);
 
                             if (mostExpensiveProduct == null)
-                            {
-                                localRemainingPlace--;
+                            { 
+                                localRemainingPlace--; 
                                 continue;
                             };
                             
@@ -96,24 +92,36 @@ namespace MyLib.Algorithm
                             
                             localRemainingPlace--;
                         }
+                        
                         resultProductDic.Add(product.Name, tempList);
                     }
                 }
             }
 
-            CalculateFinalProductList(resultProductDic);
+            (List<Product> calculatedProductList, decimal totalPrice ) = CalculateFinalProductPrice(resultProductDic);
+
+            PrintFinalProductListToConsole(calculatedProductList, totalPrice);
 
         }
         #endregion
 
-        #region List<Product> - FindProductBySameWidth Поиск продуктов по одинаковой массе
+        #region Product - GetMostExpensiveProductFromListByWeight Получить наиболее дорогой продукт из списка продуктов по массе
+        public Product GetMostExpensiveProductByWeight(int remainingPalce)
+        {
+            List<Product> sameWeightProductsList = FindProductBySameWeight(remainingPalce);
+            Product mostExpensiveProduct = GetExpensiveProductFromList(sameWeightProductsList);
+
+            return mostExpensiveProduct;
+        }
+        #endregion
+
+        #region List<Product> - FindProductBySameWeight Поиск продуктов по одинаковой массе
         /// <summary>
         /// Поиск продуктов по одинововой массе
         /// </summary>
         /// <returns></returns>
-        private List<Product> FindProductBySameWidth(int weight)
+        private List<Product> FindProductBySameWeight(int weight)
         {
-            //продукты с одинаковым весом
             List<Product> productsWithTheSameWeightList = new List<Product>();
 
             foreach (Product product in productList)
@@ -124,7 +132,6 @@ namespace MyLib.Algorithm
                 }
             }
 
-            
             return productsWithTheSameWeightList;
         }
         #endregion
@@ -134,7 +141,7 @@ namespace MyLib.Algorithm
         /// Поиск самого дорогово продукта в списке
         /// </summary>
         /// <returns></returns>
-        public Product GetExpensiveProduct(List<Product> productList)
+        public Product GetExpensiveProductFromList(List<Product> productList)
         {
             if (productList.Count == 1)
             {
@@ -149,7 +156,7 @@ namespace MyLib.Algorithm
                 Product ProductWithMaxPrice = new Product();
                 for (int i = 0; i < productList.Count; i++)
                 {
-                    if (ProductWithMaxPrice.Price < productList[i].Price)
+                    if (ProductWithMaxPrice.Price <= productList[i].Price)
                     {
                         ProductWithMaxPrice = productList[i];
                     }
@@ -160,17 +167,16 @@ namespace MyLib.Algorithm
         }
         #endregion
 
-        #region void - CalculateFinalProductList Рассчитать окончательный список продуктов в рюкзаке
+        #region (List<Product>, decimal) - CalculateFinalProductPrice Рассчитать окончательную сумму  продуктов в рюкзаке
         /// <summary>
         /// Рассчитать окончательный список продуктов в рюкзаке
         /// </summary>
         /// <returns></returns>
-        public void CalculateFinalProductList(Dictionary<string, List<Product>> resultProductDic)
+        public (List<Product>,decimal) CalculateFinalProductPrice(Dictionary<string, List<Product>> resultProductDic)
         {
             List<Product> finalSetOfProducts = new List<Product>();
             decimal totalPrice = 0;
 
-             
             foreach (var resultItem in resultProductDic)
             {
                 decimal totalPriceOfProducts = 0;
@@ -185,7 +191,7 @@ namespace MyLib.Algorithm
 
                     finalSetOfProducts.Clear();
 
-                    //To do - Убрать добовление в List при проверке суммы. 
+                    //TODO - Убрать добовление в List при проверке суммы. 
                     foreach (Product product in resultItem.Value)
                     {
                         finalSetOfProducts.Add(product);
@@ -193,9 +199,16 @@ namespace MyLib.Algorithm
                 }
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Лучшая цена: " + totalPrice);
+            return (finalSetOfProducts, totalPrice);
+        }
+        #endregion
 
+        #region void - PrintFinalProductListToConsole 
+        public void PrintFinalProductListToConsole(List<Product> finalSetOfProducts, decimal totalPrice)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"Вместимость рюкзака - {backpackWeight}");
+            Console.WriteLine("Лучшая цена: " + totalPrice);
             Console.WriteLine("Продукты для покупки:");
             for (int i = 0; i < finalSetOfProducts.Count; i++)
             {
@@ -204,11 +217,5 @@ namespace MyLib.Algorithm
         }
         #endregion
 
-        private void SwapProduct(ref List<Product> productList, int i, int j)
-        {
-            Product temp = productList[i];
-            productList[i] = productList[j];
-            productList[j] = temp;
-        }
     }
 }

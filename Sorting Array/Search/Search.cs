@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sorting_Array.Search
 {
-    public class Search1
+    public class Search
     {
         public static object BinarySearchIterative(int[] inputArray, int key)
         {
