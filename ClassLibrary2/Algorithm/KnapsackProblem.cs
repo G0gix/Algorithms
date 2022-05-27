@@ -48,7 +48,7 @@ namespace MyLib.Algorithm
             foreach (Product product in productList)
             {
                 List<Product> tempList = new List<Product>();
-                
+
                 if (product.Weight == backpackWeight)
                 {
                     tempList.Add(product);
@@ -68,7 +68,7 @@ namespace MyLib.Algorithm
                         Product mostExpensiveProduct = GetMostExpensiveProductByWeight(remainingPlace);
 
                         if (mostExpensiveProduct == null) continue;
-                       
+
                         tempList.Add(product);
                         tempList.Add(mostExpensiveProduct);
                         resultProductDic.Add(product.Name, tempList);
@@ -83,22 +83,22 @@ namespace MyLib.Algorithm
                             Product mostExpensiveProduct = GetMostExpensiveProductByWeight(localRemainingPlace);
 
                             if (mostExpensiveProduct == null)
-                            { 
-                                localRemainingPlace--; 
+                            {
+                                localRemainingPlace--;
                                 continue;
                             };
-                            
+
                             tempList.Add(mostExpensiveProduct);
-                            
+
                             localRemainingPlace--;
                         }
-                        
+
                         resultProductDic.Add(product.Name, tempList);
                     }
                 }
             }
 
-            (List<Product> calculatedProductList, decimal totalPrice ) = CalculateFinalProductPrice(resultProductDic);
+            (List<Product> calculatedProductList, decimal totalPrice) = CalculateFinalProductPrice(resultProductDic);
 
             PrintFinalProductListToConsole(calculatedProductList, totalPrice);
 
@@ -147,7 +147,7 @@ namespace MyLib.Algorithm
             {
                 return productList[0];
             }
-            else if (productList.Count == 0) 
+            else if (productList.Count == 0)
             {
                 return null;
             }
@@ -163,7 +163,7 @@ namespace MyLib.Algorithm
                 }
 
                 return ProductWithMaxPrice;
-            }                
+            }
         }
         #endregion
 
@@ -172,7 +172,7 @@ namespace MyLib.Algorithm
         /// Рассчитать окончательный список продуктов в рюкзаке
         /// </summary>
         /// <returns></returns>
-        public (List<Product>,decimal) CalculateFinalProductPrice(Dictionary<string, List<Product>> resultProductDic)
+        public (List<Product>, decimal) CalculateFinalProductPrice(Dictionary<string, List<Product>> resultProductDic)
         {
             List<Product> finalSetOfProducts = new List<Product>();
             decimal totalPrice = 0;
