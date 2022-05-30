@@ -45,7 +45,7 @@ namespace Sorting_Array
             //int count = TestClass.Count(new int[] { 2, 4, 6 });
 
             //int maxValue = Recursion.MaxValueInArray(new int[] { 2, 4, 1000, 7, 8,10,11,100 });
-            string value = Recursion.ShowAllNumbers(168);
+            //string value = Recursion.ShowAllNumbers(168);
             #endregion
 
             #region Instance

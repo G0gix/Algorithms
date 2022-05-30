@@ -216,6 +216,5 @@ namespace MyLib.Algorithm
             }
         }
         #endregion
-
     }
 }
